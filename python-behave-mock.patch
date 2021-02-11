@@ -1,0 +1,56 @@
+--- behave-1.2.6/tests/api/_test_async_step34.py.orig	2018-02-25 16:53:03.000000000 +0100
++++ behave-1.2.6/tests/api/_test_async_step34.py	2021-02-10 22:27:28.523843239 +0100
+@@ -9,7 +9,10 @@
+ from behave._stepimport import use_step_import_modules
+ from behave.runner import Context, Runner
+ import sys
+-from mock import Mock
++try:
++    from mock import Mock
++except ImportError:
++    from unittest.mock import Mock
+ import pytest
+ 
+ from .testing_support import StopWatch, SimpleStepContainer
+--- behave-1.2.6/tests/unit/test_capture.py.orig	2021-02-10 22:27:45.683750276 +0100
++++ behave-1.2.6/tests/unit/test_capture.py	2021-02-10 22:27:48.457068585 +0100
+@@ -6,7 +6,10 @@
+ from __future__ import absolute_import, print_function
+ import sys
+ from behave.capture import Captured, CaptureController
+-from mock import Mock
++try:
++    from mock import Mock
++except ImportError:
++    from unittest.mock import Mock
+ import pytest
+ 
+ # -----------------------------------------------------------------------------
+--- behave-1.2.6/tests/unit/test_context_cleanups.py.orig	2018-02-25 16:53:03.000000000 +0100
++++ behave-1.2.6/tests/unit/test_context_cleanups.py	2021-02-10 22:28:05.466976435 +0100
+@@ -13,7 +13,10 @@
+ from __future__ import print_function
+ from behave.runner import Context, scoped_context_layer
+ from contextlib import contextmanager
+-from mock import Mock, NonCallableMock
++try:
++    from mock import Mock, NonCallableMock
++except ImportError:
++    from unittest.mock import Mock, NonCallableMock
+ import pytest
+ 
+ 
+--- behave-1.2.6/tests/unit/test_fixture.py.orig	2018-02-25 16:53:03.000000000 +0100
++++ behave-1.2.6/tests/unit/test_fixture.py	2021-02-10 22:28:19.853565163 +0100
+@@ -12,7 +12,10 @@
+ from behave.runner import Context, CleanupError, scoped_context_layer
+ from behave._types import Unknown
+ import pytest
+-from mock import Mock
++try:
++    from mock import Mock
++except ImportError:
++    from unittest.mock import Mock
+ import six
+ 
+ 
