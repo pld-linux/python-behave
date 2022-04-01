@@ -50,9 +50,6 @@ BuildRequires:	python3-path >= 10.1
 BuildRequires:	python3-pyhamcrest >= 1.9
 BuildRequires:	python3-pytest >= 3.0
 BuildRequires:	python3-six >= 1.11
-%if "%{py3_ver}" < "3.4"
-BuildRequires:	python3-enum34
-%endif
 %endif
 %endif
 BuildRequires:	rpm-pythonprov
