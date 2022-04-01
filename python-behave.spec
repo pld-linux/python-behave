@@ -9,7 +9,7 @@ Summary:	Behaviour-driven development, Python style
 Summary(pl.UTF-8):	Programowanie sterowane zachowaniem - w stylu Pythona
 Name:		python-behave
 Version:	1.2.6
-Release:	5
+Release:	6
 License:	BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/behave/
