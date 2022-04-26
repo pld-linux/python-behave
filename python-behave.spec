@@ -39,8 +39,8 @@ BuildRequires:	python-ordereddict
 %endif
 %endif
 %if %{with python3}
-BuildRequires:	python3-2to3 >= 1:3.3
-BuildRequires:	python3-modules >= 1:3.3
+BuildRequires:	python3-2to3 >= 1:3.4
+BuildRequires:	python3-modules >= 1:3.4
 BuildRequires:	python3-setuptools
 %if %{with tests}
 BuildRequires:	python3-nose >= 1.3
@@ -72,7 +72,7 @@ behave to programowanie sterowane zachowaniem, w stylu Pythona.
 Summary:	Behaviour-driven development, Python style
 Summary(pl.UTF-8):	Programowanie sterowane zachowaniem - w stylu Pythona
 Group:		Libraries/Python
-Requires:	python3-modules >= 1:3.3
+Requires:	python3-modules >= 1:3.4
 
 %description -n python3-behave
 behave is behavior-driven development, Python style.
