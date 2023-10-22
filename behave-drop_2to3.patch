@@ -1,0 +1,11 @@
+--- behave-1.2.6/setup.py.orig	2018-02-25 17:27:09.000000000 +0100
++++ behave-1.2.6/setup.py	2023-10-22 09:06:13.799948986 +0200
+@@ -100,8 +100,6 @@ setup(
+             "pylint",
+         ],
+     },
+-    # MAYBE-DISABLE: use_2to3
+-    use_2to3= bool(python_version >= 3.0),
+     license="BSD",
+     classifiers=[
+         "Development Status :: 4 - Beta",

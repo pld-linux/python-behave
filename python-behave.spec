@@ -16,6 +16,11 @@ Group:		Libraries/Python
 Source0:	https://files.pythonhosted.org/packages/source/b/behave/behave-%{version}.tar.gz
 # Source0-md5:	3f05c859a1c45f5ed33e925817ad887d
 Patch0:		%{name}-mock.patch
+Patch1:		behave-backport-for-py38-fixes.patch
+Patch2:		behave-tweak-tests-required-by-pytest-5.0.patch
+Patch3:		behave-invalid-escape-seq.patch
+Patch4:		behave-sphinx-extlinks.patch
+Patch5:		behave-drop_2to3.patch
 URL:		https://pypi.org/project/behave/
 %if %{with python2}
 BuildRequires:	python-modules >= 1:2.6
@@ -94,16 +99,21 @@ Dokumentacja API modułu Pythona behave.
 %prep
 %setup -q -n behave-%{version}
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
 %if %{with python2}
 %py_build
 
 %if %{with tests}
-# can't get test_text__with_assert_failed_and_bytes_message test to work
+# can't get test_text__with_raised_exception_and_bytes_message test to work
 # (LC_ALL=C.UTF-8 and PYTHONIOENCODING=utf-8 don't help)
 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
-%{__python} -m pytest tests -k 'not test_text__with_assert_failed_and_bytes_message'
+%{__python} -m pytest tests -k 'not test_text__with_raised_exception_and_bytes_message'
 %endif
 %endif
 
@@ -111,11 +121,9 @@ PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
 %py3_build
 
 %if %{with tests}
-# test_text__with_... fail with some repr differences
-# some TestCaptureController tests die with "expected string or bytes-like object" TypeError
 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
 PYTHONPATH=$(pwd)/lib \
-%{__python3} -m pytest tests -k 'not (test_text__with_assert_failed_and_unicode_message or test_text__with_raised_exception_and_unicode_message or test_capturing__retrieve_captured_several_times or test_capturing__with_several_start_stop_cycles or test_make_capture_report or test_basics)'
+%{__python3} -m pytest tests
 %endif
 %endif
 

@@ -1,0 +1,82 @@
+--- a/behave4cmd0/command_shell_proc.py
++++ b/behave4cmd0/command_shell_proc.py
+@@ -251,6 +251,6 @@
+             "No such file or directory: '(?P<path>.*)'",
+             "[Errno 2] No such file or directory:"),  # IOError
+         ExceptionWithPathNormalizer(
+-            '^\s*File "(?P<path>.*)", line \d+, in ',
++            r'^\s*File "(?P<path>.*)", line \d+, in ',
+             'File "'),
+     ]
+--- a/tests/unit/test_behave4cmd_command_shell_proc.py
++++ b/tests/unit/test_behave4cmd_command_shell_proc.py
+@@ -1,5 +1,5 @@
+ # -*- coding: UTF-8 -*-
+-"""
++r"""
+ 
+ Regular expressions for winpath:
+ http://regexlib.com/Search.aspx?k=file+name
+@@ -61,7 +61,7 @@ def __call__(self, output):
+ 
+ line_processor_traceback = [
+     ExceptionWithPathNormalizer(
+-        '^\s*File "(?P<path>.*)", line \d+, in ',
++        r'^\s*File "(?P<path>.*)", line \d+, in ',
+         '  File "'),
+     BehaveWinCommandOutputProcessor.line_processors[4],
+ ]
+--- a/tests/issues/test_issue0336.py
++++ b/tests/issues/test_issue0336.py
+@@ -52,6 +52,7 @@ def test_issue__with_default_encoding(self):
+             assert file_line_text in text2
+ 
+     # @require_python2
++    @pytest.mark.filterwarnings("ignore:invalid escape sequence")
+     def test__problem_exists_with_problematic_encoding(self):
+         """Test ensures that problem exists with encoding=unicode-escape"""
+         # -- NOTE: Explicit use of problematic encoding
+--- a/tests/issues/test_issue0495.py
++++ b/tests/issues/test_issue0495.py
+@@ -46,7 +46,7 @@
+ def test_issue(log_message):
+     @capture(level=logging.INFO)
+     def hook_after_scenario(context, message):
+-        logging.warn(message)
++        logging.warning(message)
+         raise RuntimeError()
+ 
+     # -- PREPARE:
+--- a/test/test_parser.py
++++ b/test/test_parser.py
+@@ -2,7 +2,7 @@
+ 
+ from __future__ import absolute_import
+ from nose.tools import *
+-
++import pytest
+ from behave import i18n, model, parser
+ 
+ class Common(object):
+@@ -529,16 +529,17 @@
+             ('then', 'Then', 'stuff is in buckets', None, None),
+         ])
+ 
++    @pytest.mark.filterwarnings("ignore:invalid escape sequence")
+     def test_parses_feature_with_table_and_escaped_pipe_in_cell_values(self):
+         doc = u'''
+ Feature:
+   Scenario:
+     Given we have special cell values:
+       | name   | value    |
+-      | alice  | one\|two |
+-      | bob    |\|one     |
+-      | charly |     one\||
+-      | doro   | one\|two\|three\|four |
++      | alice  | one\\|two |
++      | bob    |\\|one     |
++      | charly |     one\\||
++      | doro   | one\\|two\\|three\\|four |
+ '''.lstrip()
+         feature = parser.parse_feature(doc)
+         assert(len(feature.scenarios) == 1)
