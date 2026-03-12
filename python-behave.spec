@@ -3,13 +3,14 @@
 %bcond_without	doc	# Sphinx documentation
 %bcond_without	tests	# unit tests
 %bcond_without	python2 # CPython 2.x module
-%bcond_without	python3 # CPython 3.x module
+%bcond_with	python3 # CPython 3.x module (built from python3-behave.spec)
 
 Summary:	Behaviour-driven development, Python style
 Summary(pl.UTF-8):	Programowanie sterowane zachowaniem - w stylu Pythona
 Name:		python-behave
+# keep 1.2.x here for python 2.7: 1.3.x requires introducing cucumber-tag-expressions
 Version:	1.2.6
-Release:	9
+Release:	10
 License:	BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/behave/
